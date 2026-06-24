@@ -2,7 +2,8 @@ import { useNavigate } from 'react-router-dom';
 import { ExecutiveKPIGrid } from '../components/KPICard';
 import PageHeader from '../components/PageHeader';
 import SCurveChart from '../components/SCurveChart';
-import ProgressFeed from '../components/ProgressFeed';
+import SiteProgressCard from '../components/SiteProgressCard';
+import DailyUpdatesCard from '../components/DailyUpdatesCard';
 import { formatETB, pct } from '../data/projectData';
 import { useKPIs, useProject } from '../store/projectStore';
 
@@ -57,13 +58,10 @@ export default function ExecutiveDashboard() {
         badge={{ text: project.progress.status, variant: 'danger' }}
       />
 
-      {/* ── 1. SITE PROGRESS FEED — top of dashboard ── */}
-      <div style={{ marginBottom: '1.75rem' }}>
-        <ProgressFeed
-          projectManager={project.projectManager}
-          compact
-          maxVisible={4}
-        />
+      {/* ── 1. Site Progress + Daily Updates — two separate cards ── */}
+      <div className="grid grid-2" style={{ marginBottom: '1.75rem' }}>
+        <SiteProgressCard projectManager={project.projectManager} compact maxVisible={6} />
+        <DailyUpdatesCard projectManager={project.projectManager} compact maxVisible={5} />
       </div>
 
       {/* ── 2. Exec meta strip ── */}
@@ -73,12 +71,7 @@ export default function ExecutiveDashboard() {
         <div><span>Commencement </span><strong>{project.dates.siteCommencement}</strong></div>
         <div><span>Completion </span><strong>{project.dates.originalCompletion}</strong></div>
         <div><span>EOT </span><strong>{project.eot.claimedDays}d — {project.eot.status}</strong></div>
-        <div style={{ marginLeft: 'auto', display: 'flex', gap: '0.5rem' }}>
-          <button type="button" className="btn btn-secondary"
-            style={{ fontSize: '0.75rem', padding: '0.3rem 0.75rem' }}
-            onClick={() => navigate('/progress-feed')}>
-            📸 Full Feed
-          </button>
+        <div style={{ marginLeft: 'auto' }}>
           <button type="button" className="btn btn-secondary"
             style={{ fontSize: '0.75rem', padding: '0.3rem 0.75rem' }}
             onClick={() => navigate('/alerts')}>
@@ -123,7 +116,7 @@ export default function ExecutiveDashboard() {
         </div>
       </div>
 
-      {/* ── 5. Bottom cards ── */}
+      {/* ── 5. Bottom summary cards ── */}
       <div className="grid grid-3">
         <div className="card" style={{ cursor:'pointer' }} onClick={() => navigate('/financial')}>
           <div className="section-title">
@@ -134,7 +127,7 @@ export default function ExecutiveDashboard() {
               <tr><td>Contract Value</td><td><strong>{formatETB(project.financial.originalContractValue)}</strong></td></tr>
               <tr><td>Total Received</td><td>{formatETB(kpis.totalReceived)}</td></tr>
               <tr><td>IPC-02 Pending</td><td style={{ color:'var(--warning)' }}>{formatETB(project.financial.ipc02Estimate)}</td></tr>
-              <tr><td>Cash Position</td><td>{formatETB(project.cashFlow[project.cashFlow.length-1]?.cumulative ?? 0)}</td></tr>
+              <tr><td>Cash Position</td><td>{formatETB(project.cashFlow[project.cashFlow.length - 1]?.cumulative ?? 0)}</td></tr>
             </tbody>
           </table>
         </div>

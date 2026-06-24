@@ -22,7 +22,6 @@ import SubcontractorRegister from './pages/SubcontractorRegister';
 import BOQModule from './pages/BOQModule';
 import DrawingRegister from './pages/DrawingRegister';
 import OrgChart from './pages/OrgChart';
-import ProgressFeedPage from './pages/ProgressFeedPage';
 
 const EB = ErrorBoundary;
 
@@ -50,8 +49,7 @@ export default function App() {
         <Route path="/subcontractors" element={<EB><SubcontractorRegister /></EB>} />
         <Route path="/boq"         element={<EB><BOQModule /></EB>} />
         <Route path="/drawings"    element={<EB><DrawingRegister /></EB>} />
-        <Route path="/org-chart"      element={<EB><OrgChart /></EB>} />
-        <Route path="/progress-feed"  element={<EB><ProgressFeedPage /></EB>} />
+        <Route path="/org-chart"   element={<EB><OrgChart /></EB>} />
       </Routes>
     </Layout>
   );

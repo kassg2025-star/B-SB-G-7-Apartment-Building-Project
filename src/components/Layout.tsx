@@ -6,10 +6,9 @@ const navSections = [
   {
     label: 'Overview',
     links: [
-      { to: '/',               label: '📊 Executive Dashboard' },
-      { to: '/progress-feed',  label: '📸 Site Progress Feed' },
-      { to: '/s-curve',        label: 'S-Curve Analysis' },
-      { to: '/delay',          label: 'Delay Analysis' },
+      { to: '/',         label: '📊 Executive Dashboard & Site Feed' },
+      { to: '/s-curve',  label: 'S-Curve Analysis' },
+      { to: '/delay',    label: 'Delay Analysis' },
     ],
   },
   {
