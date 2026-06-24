@@ -333,7 +333,7 @@ export default function ProgressFeed({ projectManager, compact = false, maxVisib
       {/* ── Header ── */}
       <div className="pfeed-header">
         <div style={{ display:'flex', alignItems:'center', gap:'0.75rem', flexWrap:'wrap' }}>
-          <span className="pfeed-title">📸 Site Progress — Daily Updates</span>
+          <span className="pfeed-title">📷 Site Progress &nbsp;|&nbsp; 📋 Daily Updates</span>
           <span className="pfeed-count">{posts.length} photos · {reports.length} reports</span>
           {totalToday > 0 && <span className="badge badge-success" style={{ fontSize:'0.65rem' }}>+{totalToday} today</span>}
         </div>
@@ -342,22 +342,34 @@ export default function ProgressFeed({ projectManager, compact = false, maxVisib
         <div style={{ display:'flex', alignItems:'center', gap:'0.5rem', flexWrap:'wrap' }}>
           <div className="sched-tabs">
             <button type="button" className={`sched-tab${tab==='photos'?' active':''}`}
-              onClick={() => setTab('photos')}>🖼 Photos & Videos</button>
+              onClick={() => setTab('photos')}>
+              📷 Site Progress
+              {posts.filter(p=>p.date===todayStr()).length > 0 && (
+                <span style={{ marginLeft:4, fontSize:'0.65rem', background:'rgba(76,175,130,0.25)', color:'var(--success)', borderRadius:999, padding:'1px 5px' }}>
+                  {posts.filter(p=>p.date===todayStr()).length}
+                </span>
+              )}
+            </button>
             <button type="button" className={`sched-tab${tab==='reports'?' active':''}`}
               onClick={() => setTab('reports')}>
-              📋 Daily Reports {reportsToday > 0 && <span style={{ marginLeft:4 }}>({reportsToday})</span>}
+              📋 Daily Updates
+              {reportsToday > 0 && (
+                <span style={{ marginLeft:4, fontSize:'0.65rem', background:'rgba(76,175,130,0.25)', color:'var(--success)', borderRadius:999, padding:'1px 5px' }}>
+                  {reportsToday}
+                </span>
+              )}
             </button>
           </div>
 
-          {/* Category filter */}
-          {tab === 'photos' && !compact && (
+          {/* Category / type filter — always visible in both modes */}
+          {tab === 'photos' && (
             <select className="status-select" style={{ fontSize:'0.72rem' }}
               value={filterCat} onChange={e => setFilterCat(e.target.value as typeof filterCat)}>
               <option value="All">All Categories</option>
               {Object.keys(CAT_COLORS).map(c=><option key={c} value={c}>{c}</option>)}
             </select>
           )}
-          {tab === 'reports' && !compact && (
+          {tab === 'reports' && (
             <select className="status-select" style={{ fontSize:'0.72rem' }}
               value={filterType} onChange={e => setFilterType(e.target.value as typeof filterType)}>
               <option value="All">All Types</option>
